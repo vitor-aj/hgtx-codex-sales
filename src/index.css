@@ -1,43 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 220 15% 98%;
-    --foreground: 220 15% 10%;
+    /* HGTX Codex - Light Theme */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 15% 10%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 15% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 217 91% 30%;
+    --primary: 190 100% 45%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 217 91% 25%;
+    --primary-hover: 190 100% 40%;
 
-    --secondary: 220 14% 96%;
-    --secondary-foreground: 220 15% 10%;
+    --secondary: 210 100% 45%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 220 14% 96%;
-    --muted-foreground: 220 9% 46%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    --accent: 217 91% 95%;
-    --accent-foreground: 217 91% 30%;
+    --accent: 190 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 217 91% 30%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 190 100% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
     /* Temperature colors */
     --temp-cold: 217 91% 50%;
@@ -48,7 +47,7 @@ All colors MUST be HSL.
     --status-success: 142 76% 36%;
     --status-warning: 38 92% 50%;
     --status-danger: 0 84% 60%;
-    --status-info: 217 91% 50%;
+    --status-info: 190 100% 45%;
 
     /* Adherence colors */
     --adherence-high: 142 76% 36%;
@@ -56,88 +55,149 @@ All colors MUST be HSL.
     --adherence-low: 0 84% 60%;
 
     /* Chart colors */
-    --chart-1: 217 91% 50%;
+    --chart-1: 190 100% 45%;
     --chart-2: 173 58% 39%;
     --chart-3: 38 92% 50%;
     --chart-4: 280 65% 60%;
     --chart-5: 0 84% 60%;
 
-    --sidebar-background: 220 15% 10%;
-    --sidebar-foreground: 220 15% 90%;
-    --sidebar-primary: 217 91% 30%;
+    /* Sidebar specific - Light */
+    --sidebar-background: 210 40% 99%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 190 100% 45%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 15%;
-    --sidebar-accent-foreground: 220 15% 90%;
-    --sidebar-border: 220 15% 20%;
-    --sidebar-ring: 217 91% 50%;
+    --sidebar-accent: 210 40% 95%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 214 32% 88%;
+    --sidebar-ring: 190 100% 45%;
+
+    /* Custom gradients - Light */
+    --gradient-cyber: linear-gradient(135deg, hsl(190 100% 45%) 0%, hsl(210 100% 45%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(210 40% 98%) 0%, hsl(210 40% 95%) 100%);
+    --glow-cyan: 0 0 40px hsl(190 100% 50% / 0.15);
+    --glow-blue: 0 0 30px hsl(210 100% 50% / 0.12);
+    
+    /* Animation speeds */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .dark {
-    --background: 220 15% 8%;
-    --foreground: 220 15% 95%;
+    /* HGTX Codex - Dark Theme */
+    --background: 222 47% 5%;
+    --foreground: 200 100% 95%;
 
-    --card: 220 15% 10%;
-    --card-foreground: 220 15% 95%;
+    --card: 222 40% 8%;
+    --card-foreground: 200 100% 95%;
 
-    --popover: 220 15% 10%;
-    --popover-foreground: 220 15% 95%;
+    --popover: 222 45% 10%;
+    --popover-foreground: 200 100% 95%;
 
-    --primary: 217 91% 50%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 217 91% 45%;
+    --primary: 190 100% 50%;
+    --primary-foreground: 222 47% 5%;
+    --primary-hover: 190 100% 45%;
 
-    --secondary: 220 15% 15%;
-    --secondary-foreground: 220 15% 95%;
+    --secondary: 210 100% 50%;
+    --secondary-foreground: 222 47% 5%;
 
-    --muted: 220 15% 15%;
-    --muted-foreground: 220 9% 60%;
+    --muted: 222 30% 15%;
+    --muted-foreground: 200 20% 65%;
 
-    --accent: 220 15% 15%;
-    --accent-foreground: 217 91% 50%;
+    --accent: 190 100% 60%;
+    --accent-foreground: 222 47% 5%;
 
-    --destructive: 0 62% 50%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 200 100% 95%;
 
-    --border: 220 15% 20%;
-    --input: 220 15% 20%;
-    --ring: 217 91% 50%;
+    --border: 222 30% 18%;
+    --input: 222 30% 18%;
+    --ring: 190 100% 50%;
 
+    /* Temperature colors - Dark */
     --temp-cold: 217 91% 60%;
     --temp-warm: 38 92% 60%;
     --temp-hot: 0 84% 70%;
 
+    /* Status colors - Dark */
     --status-success: 142 76% 45%;
     --status-warning: 38 92% 60%;
     --status-danger: 0 84% 70%;
-    --status-info: 217 91% 60%;
+    --status-info: 190 100% 60%;
 
+    /* Adherence colors - Dark */
     --adherence-high: 142 76% 45%;
     --adherence-medium: 38 92% 60%;
     --adherence-low: 0 84% 70%;
 
-    --chart-1: 217 91% 60%;
+    /* Chart colors - Dark */
+    --chart-1: 190 100% 60%;
     --chart-2: 173 58% 50%;
     --chart-3: 38 92% 60%;
     --chart-4: 280 65% 70%;
     --chart-5: 0 84% 70%;
 
-    --sidebar-background: 220 15% 5%;
-    --sidebar-foreground: 220 15% 90%;
-    --sidebar-primary: 217 91% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 15% 10%;
-    --sidebar-accent-foreground: 220 15% 90%;
-    --sidebar-border: 220 15% 15%;
-    --sidebar-ring: 217 91% 60%;
+    /* Sidebar specific - Dark */
+    --sidebar-background: 222 45% 7%;
+    --sidebar-foreground: 200 100% 90%;
+    --sidebar-primary: 190 100% 50%;
+    --sidebar-primary-foreground: 222 47% 5%;
+    --sidebar-accent: 222 35% 12%;
+    --sidebar-accent-foreground: 190 100% 60%;
+    --sidebar-border: 222 30% 15%;
+    --sidebar-ring: 190 100% 50%;
+
+    /* Custom gradients - Dark */
+    --gradient-cyber: linear-gradient(135deg, hsl(190 100% 50%) 0%, hsl(210 100% 50%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(222 45% 8%) 0%, hsl(222 47% 5%) 100%);
+    --glow-cyan: 0 0 40px hsl(190 100% 50% / 0.3);
+    --glow-blue: 0 0 30px hsl(210 100% 50% / 0.25);
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border transition-colors;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/50;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply bg-card/40 backdrop-blur-xl border border-border/50;
+  }
+
+  .cyber-glow {
+    box-shadow: var(--glow-cyan);
+  }
+
+  .cyber-border {
+    @apply border border-primary/30 rounded-lg;
+    box-shadow: 0 0 20px hsl(190 100% 50% / 0.1);
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
   }
 }
