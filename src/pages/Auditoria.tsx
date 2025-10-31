@@ -64,8 +64,8 @@ export default function Auditoria() {
                   <div
                     key={conv.id}
                     onClick={() => setSelectedConversation(conv)}
-                    className={`cursor-pointer rounded-lg border p-4 transition-colors hover:bg-accent ${
-                      selectedConversation?.id === conv.id ? "border-primary bg-accent" : ""
+                    className={`cursor-pointer rounded-lg border p-4 transition-colors hover:bg-muted/50 ${
+                      selectedConversation?.id === conv.id ? "border-muted-foreground/30 bg-muted" : ""
                     }`}
                   >
                     <div className="flex items-start justify-between">
