@@ -42,19 +42,19 @@ const funnelByTempData = [
 
 export default function Dashboard() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Dashboard Executivo</h1>
-        <p className="text-muted-foreground">Visão consolidada dos principais indicadores</p>
+        <h1 className="text-2xl md:text-3xl font-bold">Dashboard Executivo</h1>
+        <p className="text-sm md:text-base text-muted-foreground">Visão consolidada dos principais indicadores</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-3 grid-cols-2 lg:grid-cols-5">
         {mockKPIs.map((kpi) => (
           <KPICard key={kpi.label} {...kpi} />
         ))}
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 md:gap-6 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -62,8 +62,8 @@ export default function Dashboard() {
               Evolução da Taxa de Conversão
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={conversionTrendData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
@@ -102,8 +102,8 @@ export default function Dashboard() {
               Performance por Representante
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={300}>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250}>
               <BarChart data={teamPerformanceData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
                 <XAxis dataKey="rep" stroke="hsl(var(--muted-foreground))" />
@@ -130,8 +130,8 @@ export default function Dashboard() {
             Funil por Temperatura
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
+        <CardContent className="px-2 md:px-6">
+          <ResponsiveContainer width="100%" height={250}>
             <BarChart data={funnelByTempData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
               <XAxis dataKey="stage" stroke="hsl(var(--muted-foreground))" />
@@ -159,41 +159,41 @@ export default function Dashboard() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
-          <div className="flex items-start gap-3 rounded-lg border border-status-warning/20 bg-status-warning/5 p-4">
-            <AlertCircle className="h-5 w-5 text-status-warning" />
-            <div className="flex-1">
-              <h4 className="font-semibold">5 leads quentes sem follow-up há 24h</h4>
-              <p className="text-sm text-muted-foreground">
+          <div className="flex items-start gap-3 rounded-lg border border-status-warning/20 bg-status-warning/5 p-3 md:p-4">
+            <AlertCircle className="h-5 w-5 text-status-warning flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm md:text-base">5 leads quentes sem follow-up há 24h</h4>
+              <p className="text-xs md:text-sm text-muted-foreground">
                 Leads com alta probabilidade de conversão precisam de atenção imediata
               </p>
             </div>
-            <Badge variant="outline" className="text-status-warning border-status-warning">
+            <Badge variant="outline" className="text-status-warning border-status-warning text-xs flex-shrink-0">
               Urgente
             </Badge>
           </div>
 
-          <div className="flex items-start gap-3 rounded-lg border border-status-danger/20 bg-status-danger/5 p-4">
-            <AlertCircle className="h-5 w-5 text-status-danger" />
-            <div className="flex-1">
-              <h4 className="font-semibold">Queda de aderência: Pedro M.</h4>
-              <p className="text-sm text-muted-foreground">
+          <div className="flex items-start gap-3 rounded-lg border border-status-danger/20 bg-status-danger/5 p-3 md:p-4">
+            <AlertCircle className="h-5 w-5 text-status-danger flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm md:text-base">Queda de aderência: Pedro M.</h4>
+              <p className="text-xs md:text-sm text-muted-foreground">
                 Aderência caiu de 82% para 69% nos últimos 7 dias
               </p>
             </div>
-            <Badge variant="outline" className="text-status-danger border-status-danger">
+            <Badge variant="outline" className="text-status-danger border-status-danger text-xs flex-shrink-0">
               Crítico
             </Badge>
           </div>
 
-          <div className="flex items-start gap-3 rounded-lg border border-status-info/20 bg-status-info/5 p-4">
-            <AlertCircle className="h-5 w-5 text-status-info" />
-            <div className="flex-1">
-              <h4 className="font-semibold">Aumento de objeções de "Timing"</h4>
-              <p className="text-sm text-muted-foreground">
+          <div className="flex items-start gap-3 rounded-lg border border-status-info/20 bg-status-info/5 p-3 md:p-4">
+            <AlertCircle className="h-5 w-5 text-status-info flex-shrink-0" />
+            <div className="flex-1 min-w-0">
+              <h4 className="font-semibold text-sm md:text-base">Aumento de objeções de "Timing"</h4>
+              <p className="text-xs md:text-sm text-muted-foreground">
                 38% das conversas apresentam objeção de timing, +12% vs. semana anterior
               </p>
             </div>
-            <Badge variant="outline" className="text-status-info border-status-info">
+            <Badge variant="outline" className="text-status-info border-status-info text-xs flex-shrink-0">
               Info
             </Badge>
           </div>
@@ -208,9 +208,9 @@ export default function Dashboard() {
           <div className="space-y-4">
             {mockObjections.map((objection) => (
               <div key={objection.type} className="space-y-2">
-                <div className="flex items-center justify-between text-sm">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-sm">
                   <span className="font-medium">{objection.type}</span>
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm">
                     <span className="text-muted-foreground">{objection.count} menções</span>
                     <span className="font-semibold text-status-success">
                       {objection.resolvedRate}% resolvidas

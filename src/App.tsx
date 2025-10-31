@@ -28,7 +28,7 @@ const App = () => (
             <AppSidebar />
             <div className="flex flex-1 flex-col">
               <TopBar />
-              <main className="flex-1 p-6 bg-background">
+              <main className="flex-1 p-4 md:p-6 bg-background">
                 <Routes>
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/auditoria" element={<Auditoria />} />

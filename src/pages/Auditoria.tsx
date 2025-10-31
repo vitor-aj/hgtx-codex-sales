@@ -37,34 +37,34 @@ export default function Auditoria() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Auditoria de Conversas</h1>
-        <p className="text-muted-foreground">Análise semântica detalhada por conversa</p>
+        <h1 className="text-2xl md:text-3xl font-bold">Auditoria de Conversas</h1>
+        <p className="text-sm md:text-base text-muted-foreground">Análise semântica detalhada por conversa</p>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex flex-col md:flex-row gap-3 md:gap-4">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input placeholder="Buscar por lead, representante ou palavra-chave..." className="pl-10" />
         </div>
-        <Button variant="outline">Filtros Avançados</Button>
+        <Button variant="outline" className="w-full md:w-auto">Filtros Avançados</Button>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 md:gap-6 lg:grid-cols-3">
         {/* Lista de conversas */}
         <Card className="lg:col-span-1">
           <CardHeader>
             <CardTitle className="text-lg">Conversas Recentes</CardTitle>
           </CardHeader>
           <CardContent className="p-0">
-            <ScrollArea className="h-[calc(100vh-300px)]">
-              <div className="space-y-2 p-4">
+            <ScrollArea className="h-[400px] lg:h-[calc(100vh-300px)]">
+              <div className="space-y-2 p-3 md:p-4">
                 {mockConversations.map((conv) => (
                   <div
                     key={conv.id}
                     onClick={() => setSelectedConversation(conv)}
-                    className={`cursor-pointer rounded-lg border p-4 transition-colors hover:bg-muted/50 ${
+                    className={`cursor-pointer rounded-lg border p-3 md:p-4 transition-colors hover:bg-muted/50 ${
                       selectedConversation?.id === conv.id ? "border-muted-foreground/30 bg-muted" : ""
                     }`}
                   >
@@ -99,14 +99,14 @@ export default function Auditoria() {
 
         {/* Detalhes da conversa */}
         {selectedConversation && (
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 md:space-y-6">
             {/* Header da conversa */}
             <Card>
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div>
-                    <CardTitle className="text-xl">{selectedConversation.leadName}</CardTitle>
-                    <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+              <CardHeader className="p-4 md:p-6">
+                <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <CardTitle className="text-lg md:text-xl">{selectedConversation.leadName}</CardTitle>
+                    <div className="mt-2 flex flex-wrap items-center gap-2 md:gap-3 text-xs md:text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <User className="h-4 w-4" />
                         {selectedConversation.representative}
@@ -125,13 +125,13 @@ export default function Auditoria() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col items-end gap-2">
+                  <div className="flex md:flex-col items-center md:items-end gap-3 md:gap-2">
                     <Badge variant="outline" className={getTempBadgeColor(selectedConversation.temperature)}>
                       {selectedConversation.temperature === "hot" ? "Quente" : selectedConversation.temperature === "warm" ? "Morno" : "Frio"}
                     </Badge>
                     <div className="text-right">
-                      <div className="text-sm text-muted-foreground">Aderência</div>
-                      <div className={`text-2xl font-bold ${getAdherenceColor(selectedConversation.adherenceScore)}`}>
+                      <div className="text-xs md:text-sm text-muted-foreground">Aderência</div>
+                      <div className={`text-xl md:text-2xl font-bold ${getAdherenceColor(selectedConversation.adherenceScore)}`}>
                         {selectedConversation.adherenceScore}%
                       </div>
                     </div>
@@ -141,32 +141,32 @@ export default function Auditoria() {
             </Card>
 
             {/* Cartas de IA */}
-            <div className="grid gap-4 md:grid-cols-2">
+            <div className="grid gap-3 md:gap-4 md:grid-cols-2">
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base">
+                <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base">
                     <CheckCircle className="h-4 w-4 text-status-success" />
                     Resumo Executivo
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-sm leading-relaxed">{selectedConversation.summary}</p>
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <p className="text-xs md:text-sm leading-relaxed">{selectedConversation.summary}</p>
                 </CardContent>
               </Card>
 
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base">
+                <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base">
                     <TrendingUp className="h-4 w-4 text-primary" />
                     Probabilidade de Conversão
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4">
-                    <div className="text-4xl font-bold text-primary">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <div className="text-3xl md:text-4xl font-bold text-primary">
                       {selectedConversation.conversionProbability}%
                     </div>
-                    <div className="flex-1 text-sm text-muted-foreground">
+                    <div className="flex-1 text-xs md:text-sm text-muted-foreground">
                       {selectedConversation.conversionProbability >= 75
                         ? "Alta chance de conversão. Lead muito engajado com dores claras."
                         : selectedConversation.conversionProbability >= 50
@@ -178,20 +178,20 @@ export default function Auditoria() {
               </Card>
 
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base">
+                <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base">
                     <AlertCircle className="h-4 w-4 text-status-danger" />
                     Dores Identificadas
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="p-4 md:p-6 pt-0">
                   <div className="space-y-2">
                     {selectedConversation.painPoints.map((pain, idx) => (
-                      <div key={idx} className="flex items-start gap-2">
-                        <Badge variant="outline" className="text-status-danger border-status-danger">
+                      <div key={idx} className="flex flex-col md:flex-row md:items-start gap-2">
+                        <Badge variant="outline" className="text-status-danger border-status-danger text-xs w-fit">
                           {pain.category}
                         </Badge>
-                        <p className="text-sm">{pain.text}</p>
+                        <p className="text-xs md:text-sm">{pain.text}</p>
                       </div>
                     ))}
                   </div>
@@ -199,16 +199,16 @@ export default function Auditoria() {
               </Card>
 
               <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="flex items-center gap-2 text-base">
+                <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                  <CardTitle className="flex items-center gap-2 text-sm md:text-base">
                     <Target className="h-4 w-4 text-status-success" />
                     Desejos Mapeados
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
+                <CardContent className="p-4 md:p-6 pt-0">
+                  <div className="flex flex-wrap gap-1.5 md:gap-2">
                     {selectedConversation.desires.map((desire, idx) => (
-                      <Badge key={idx} variant="outline" className="text-status-success border-status-success">
+                      <Badge key={idx} variant="outline" className="text-status-success border-status-success text-xs">
                         {desire}
                       </Badge>
                     ))}
@@ -219,21 +219,23 @@ export default function Auditoria() {
 
             {/* Próximos Passos */}
             <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-base">
+              <CardHeader className="pb-2 md:pb-3 p-4 md:p-6">
+                <CardTitle className="flex items-center gap-2 text-sm md:text-base">
                   <Lightbulb className="h-4 w-4 text-status-warning" />
                   Próximos Passos Sugeridos
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2">
+              <CardContent className="p-4 md:p-6 pt-0">
+                <div className="space-y-3">
                   {selectedConversation.nextSteps.map((step, idx) => (
-                    <div key={idx} className="flex items-start gap-3">
-                      <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">
-                        {idx + 1}
+                    <div key={idx} className="flex flex-col md:flex-row md:items-start gap-2 md:gap-3">
+                      <div className="flex items-start gap-2 flex-1">
+                        <div className="mt-0.5 flex h-5 w-5 md:h-6 md:w-6 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary flex-shrink-0">
+                          {idx + 1}
+                        </div>
+                        <p className="flex-1 text-xs md:text-sm">{step}</p>
                       </div>
-                      <p className="flex-1 text-sm">{step}</p>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" className="w-full md:w-auto text-xs">
                         Executar
                       </Button>
                     </div>
@@ -244,30 +246,30 @@ export default function Auditoria() {
 
             {/* Transcrição */}
             <Card>
-              <CardHeader>
-                <CardTitle>Transcrição Semântica</CardTitle>
+              <CardHeader className="p-4 md:p-6">
+                <CardTitle className="text-base md:text-lg">Transcrição Semântica</CardTitle>
               </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[500px] pr-4">
-                  <div className="space-y-4">
+              <CardContent className="p-4 md:p-6 pt-0">
+                <ScrollArea className="h-[400px] md:h-[500px] pr-2 md:pr-4">
+                  <div className="space-y-3 md:space-y-4">
                     {selectedConversation.transcript.map((segment, idx) => (
                       <div
                         key={idx}
-                        className={`rounded-lg p-4 ${
+                        className={`rounded-lg p-3 md:p-4 ${
                           segment.speaker === "rep" ? "bg-primary/5 border-l-4 border-primary" : "bg-muted"
                         }`}
                       >
                         <div className="mb-2 flex items-center justify-between">
-                          <span className="text-sm font-semibold">
+                          <span className="text-xs md:text-sm font-semibold">
                             {segment.speaker === "rep" ? "Representante" : "Lead"}
                           </span>
                           <span className="text-xs text-muted-foreground">{segment.timestamp}</span>
                         </div>
-                        <p className="mb-2 leading-relaxed">{segment.text}</p>
+                        <p className="mb-2 text-xs md:text-sm leading-relaxed">{segment.text}</p>
                         {segment.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1">
                             {segment.tags.map((tag) => (
-                              <Badge key={tag} variant="outline" className={getTagColor(tag)}>
+                              <Badge key={tag} variant="outline" className={`${getTagColor(tag)} text-xs`}>
                                 {tag === "adherence" && "Aderência"}
                                 {tag === "objection" && "Objeção"}
                                 {tag === "cta" && "CTA"}

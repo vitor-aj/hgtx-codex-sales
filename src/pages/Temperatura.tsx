@@ -115,64 +115,64 @@ export default function Temperatura() {
     >
       <div className={`absolute inset-0 bg-gradient-to-br ${getTempGradient(lead.temperature)} pointer-events-none`} />
       
-      <CardContent className="relative p-5 space-y-4">
+      <CardContent className="relative p-4 md:p-5 space-y-3 md:space-y-4">
         {/* Header */}
         <div className="flex items-start justify-between">
-          <div className="flex-1">
-            <h4 className="font-semibold text-lg mb-1">{lead.name}</h4>
-            <p className="text-sm text-muted-foreground flex items-center gap-2">
+          <div className="flex-1 min-w-0">
+            <h4 className="font-semibold text-base md:text-lg mb-1 truncate">{lead.name}</h4>
+            <p className="text-xs md:text-sm text-muted-foreground flex items-center gap-2">
               {lead.channel === "whatsapp" ? (
                 <MessageSquare className="h-3.5 w-3.5 text-status-success" />
               ) : (
                 <Phone className="h-3.5 w-3.5 text-primary" />
               )}
-              {lead.contact}
+              <span className="truncate">{lead.contact}</span>
             </p>
           </div>
-          <Badge variant="outline" className={getTempBadge(lead.temperature)}>
+          <Badge variant="outline" className={`${getTempBadge(lead.temperature)} text-xs flex-shrink-0`}>
             {lead.temperature === "hot" ? "Quente" : lead.temperature === "warm" ? "Morno" : "Frio"}
           </Badge>
         </div>
 
         {/* Metrics */}
-        <div className="grid gap-3">
+        <div className="grid gap-2 md:gap-3">
           <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
-            <span className="text-sm font-medium">ICP Fit</span>
-            <div className="flex items-center gap-3">
-              <div className="h-2 w-24 overflow-hidden rounded-full bg-muted">
+            <span className="text-xs md:text-sm font-medium">ICP Fit</span>
+            <div className="flex items-center gap-2 md:gap-3">
+              <div className="h-2 w-16 md:w-24 overflow-hidden rounded-full bg-muted">
                 <div
                   className="h-full bg-gradient-to-r from-primary to-secondary transition-all"
                   style={{ width: `${lead.icpFitScore}%` }}
                 />
               </div>
-              <span className="font-bold text-sm min-w-[3ch] text-right">{lead.icpFitScore}%</span>
+              <span className="font-bold text-xs md:text-sm min-w-[3ch] text-right">{lead.icpFitScore}%</span>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
-            <span className="text-sm font-medium">Valor Potencial</span>
-            <span className="font-bold text-sm">
-              {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(
+            <span className="text-xs md:text-sm font-medium">Valor Potencial</span>
+            <span className="font-bold text-xs md:text-sm">
+              {new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL", minimumFractionDigits: 0 }).format(
                 lead.potentialValue
               )}
             </span>
           </div>
 
           <div className="flex items-center justify-between p-2 rounded-lg bg-muted/30">
-            <span className="text-sm font-medium">Etapa</span>
-            <Badge variant="outline" className="bg-background/80">
+            <span className="text-xs md:text-sm font-medium">Etapa</span>
+            <Badge variant="outline" className="bg-background/80 text-xs">
               {lead.funnelStage}
             </Badge>
           </div>
         </div>
 
         {/* Intent Signals */}
-        <div className="glass-effect rounded-lg p-3 space-y-2">
+        <div className="glass-effect rounded-lg p-2 md:p-3 space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold text-primary">
-            <TrendingUp className="h-3.5 w-3.5" />
+            <TrendingUp className="h-3 w-3 md:h-3.5 md:w-3.5" />
             Sinais de Intenção
           </div>
-          <ul className="space-y-1.5 text-xs text-muted-foreground">
+          <ul className="space-y-1 md:space-y-1.5 text-[10px] md:text-xs text-muted-foreground">
             {lead.temperature === "hot" && (
               <>
                 <li className="flex items-start gap-1.5">
@@ -225,20 +225,20 @@ export default function Temperatura() {
         </div>
 
         {/* Next Step */}
-        <div className="space-y-2">
+        <div className="space-y-1 md:space-y-2">
           <div className="flex items-center gap-2 text-xs font-bold">
-            <CheckCircle className="h-3.5 w-3.5 text-primary" />
+            <CheckCircle className="h-3 w-3 md:h-3.5 md:w-3.5 text-primary" />
             Próximo Passo
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">{lead.nextStep}</p>
+          <p className="text-xs md:text-sm text-muted-foreground leading-relaxed">{lead.nextStep}</p>
         </div>
 
         {/* Actions */}
         <div className="flex gap-2 pt-2">
-          <Button size="sm" className="flex-1 font-semibold">
+          <Button size="sm" className="flex-1 font-semibold text-xs">
             Executar
           </Button>
-          <Button size="sm" variant="outline" className="flex-1 font-semibold">
+          <Button size="sm" variant="outline" className="flex-1 font-semibold text-xs">
             Detalhes
           </Button>
         </div>
@@ -256,19 +256,19 @@ export default function Temperatura() {
     return (
       <div
         ref={setNodeRef}
-        className={`space-y-4 rounded-xl border-2 border-dashed p-4 transition-all min-h-[600px] ${
+        className={`space-y-3 md:space-y-4 rounded-xl border-2 border-dashed p-3 md:p-4 transition-all min-h-[400px] md:min-h-[600px] ${
           isOver
             ? "border-primary bg-primary/5 scale-[1.02]"
             : "border-border/50 bg-background/30"
         }`}
       >
         {/* Column Header */}
-        <div className="flex items-center justify-between sticky top-0 z-10 bg-background/80 backdrop-blur-sm p-3 rounded-lg border border-border/50">
-          <h3 className="flex items-center gap-3 text-lg font-bold">
-            <Icon className={`h-5 w-5 ${temperature === "hot" ? "text-temp-hot" : temperature === "warm" ? "text-temp-warm" : "text-temp-cold"}`} />
+        <div className="flex items-center justify-between sticky top-0 z-10 bg-background/80 backdrop-blur-sm p-2 md:p-3 rounded-lg border border-border/50">
+          <h3 className="flex items-center gap-2 md:gap-3 text-base md:text-lg font-bold">
+            <Icon className={`h-4 w-4 md:h-5 md:w-5 ${temperature === "hot" ? "text-temp-hot" : temperature === "warm" ? "text-temp-warm" : "text-temp-cold"}`} />
             {title}
           </h3>
-          <Badge variant="outline" className={`${getTempBadge(temperature)} font-bold px-3 py-1`}>
+          <Badge variant="outline" className={`${getTempBadge(temperature)} font-bold px-2 md:px-3 py-1 text-xs`}>
             {columnLeads.length}
           </Badge>
         </div>
@@ -297,12 +297,12 @@ export default function Temperatura() {
   const activeLead = activeId ? leads.find((l) => l.id === activeId) : null;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold gradient-text">Classificação de Temperatura</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl md:text-3xl font-bold gradient-text">Classificação de Temperatura</h1>
+          <p className="text-sm md:text-base text-muted-foreground mt-1">
             Arraste leads entre colunas para priorizar por probabilidade de conversão
           </p>
         </div>
@@ -322,7 +322,7 @@ export default function Temperatura() {
           onDragEnd={handleDragEnd}
         >
           <SortableContext items={["hot", "warm", "cold"]}>
-            <div className="grid gap-6 md:grid-cols-3">
+            <div className="grid gap-4 md:gap-6 grid-cols-1 md:grid-cols-3">
               <KanbanColumn temperature="hot" title="Quente" icon={Flame} />
               <KanbanColumn temperature="warm" title="Morno" icon={ThermometerSun} />
               <KanbanColumn temperature="cold" title="Frio" icon={Snowflake} />
@@ -349,27 +349,27 @@ export default function Temperatura() {
                 .map((lead) => (
                   <div
                     key={lead.id}
-                    className={`flex items-center justify-between rounded-lg border-l-4 p-4 transition-all hover:shadow-md ${getTempColor(
+                    className={`flex flex-col md:flex-row md:items-center justify-between rounded-lg border-l-4 p-3 md:p-4 transition-all hover:shadow-md gap-3 md:gap-4 ${getTempColor(
                       lead.temperature
                     )} bg-card/50 backdrop-blur-sm`}
                   >
-                    <div className="flex items-center gap-4">
-                      <Badge variant="outline" className={getTempBadge(lead.temperature)}>
+                    <div className="flex items-center gap-3 md:gap-4 flex-1 min-w-0">
+                      <Badge variant="outline" className={`${getTempBadge(lead.temperature)} text-xs flex-shrink-0`}>
                         {lead.temperature === "hot" ? "🔥 Quente" : lead.temperature === "warm" ? "🌡️ Morno" : "❄️ Frio"}
                       </Badge>
-                      <div>
-                        <h4 className="font-semibold">{lead.name}</h4>
-                        <p className="text-sm text-muted-foreground">{lead.funnelStage}</p>
+                      <div className="min-w-0">
+                        <h4 className="font-semibold text-sm md:text-base truncate">{lead.name}</h4>
+                        <p className="text-xs md:text-sm text-muted-foreground">{lead.funnelStage}</p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center justify-between md:justify-end gap-4 md:gap-6">
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground">ICP Fit</div>
-                        <div className="font-bold">{lead.icpFitScore}%</div>
+                        <div className="font-bold text-sm">{lead.icpFitScore}%</div>
                       </div>
                       <div className="text-right">
                         <div className="text-xs text-muted-foreground">Valor</div>
-                        <div className="font-bold">
+                        <div className="font-bold text-sm">
                           {new Intl.NumberFormat("pt-BR", {
                             style: "currency",
                             currency: "BRL",
@@ -377,7 +377,7 @@ export default function Temperatura() {
                           }).format(lead.potentialValue)}
                         </div>
                       </div>
-                      <Button size="sm" className="font-semibold">Ver Detalhes</Button>
+                      <Button size="sm" className="font-semibold text-xs flex-shrink-0">Ver Detalhes</Button>
                     </div>
                   </div>
                 ))}
