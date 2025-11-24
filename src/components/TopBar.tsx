@@ -1,4 +1,4 @@
-import { Calendar, Users, Tag, Filter } from "lucide-react";
+import { Calendar, Filter } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -31,31 +31,6 @@ export function TopBar() {
             <SelectItem value="7d">Últimos 7 dias</SelectItem>
             <SelectItem value="30d">Últimos 30 dias</SelectItem>
             <SelectItem value="90d">Últimos 90 dias</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select defaultValue="all">
-          <SelectTrigger className="w-[140px]">
-            <Users className="mr-2 h-4 w-4" />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todos os times</SelectItem>
-            <SelectItem value="inbound">Inbound</SelectItem>
-            <SelectItem value="outbound">Outbound</SelectItem>
-          </SelectContent>
-        </Select>
-
-        <Select defaultValue="all">
-          <SelectTrigger className="w-[140px]">
-            <Tag className="mr-2 h-4 w-4" />
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">Todas campanhas</SelectItem>
-            <SelectItem value="q4">Inbound Q4</SelectItem>
-            <SelectItem value="enterprise">Outbound Enterprise</SelectItem>
-            <SelectItem value="webinar">Webinar Jan</SelectItem>
           </SelectContent>
         </Select>
 
