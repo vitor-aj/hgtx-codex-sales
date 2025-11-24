@@ -1,4 +1,4 @@
-import { LayoutDashboard, MessageSquare, Target, Thermometer, CheckSquare, AlertCircle, Settings } from "lucide-react";
+import { LayoutDashboard, MessageSquare, CheckSquare } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -15,11 +15,7 @@ import {
 const menuItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Auditoria", url: "/auditoria", icon: MessageSquare },
-  { title: "Temperatura", url: "/temperatura", icon: Thermometer },
   { title: "Aderência", url: "/aderencia", icon: CheckSquare },
-  { title: "Objeções", url: "/objecoes", icon: AlertCircle },
-  { title: "Segmentação", url: "/segmentacao", icon: Target },
-  { title: "Configurações", url: "/configuracoes", icon: Settings },
 ];
 
 export function AppSidebar() {
