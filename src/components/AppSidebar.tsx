@@ -1,4 +1,4 @@
-import { LayoutDashboard, MessageSquare, CheckSquare } from "lucide-react";
+import { LayoutDashboard, MessageSquare, ScrollText } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import {
   Sidebar,
@@ -15,7 +15,7 @@ import {
 const menuItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Auditoria", url: "/auditoria", icon: MessageSquare },
-  { title: "Aderência", url: "/aderencia", icon: CheckSquare },
+  { title: "Aderência", url: "/aderencia", icon: ScrollText },
 ];
 
 export function AppSidebar() {
