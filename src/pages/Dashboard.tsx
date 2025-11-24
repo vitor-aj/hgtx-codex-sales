@@ -33,11 +33,11 @@ const teamPerformanceData = [
 ];
 
 const funnelByTempData = [
-  { stage: "Qualificação", cold: 45, warm: 28, hot: 12 },
-  { stage: "Descoberta", cold: 22, warm: 35, hot: 18 },
-  { stage: "Apresentação", cold: 8, warm: 28, hot: 24 },
-  { stage: "Proposta", cold: 3, warm: 15, hot: 32 },
-  { stage: "Negociação", cold: 1, warm: 8, hot: 28 },
+  { month: "Set", cold: 145, warm: 98, hot: 52 },
+  { month: "Out", cold: 132, warm: 115, hot: 68 },
+  { month: "Nov", cold: 128, warm: 128, hot: 84 },
+  { month: "Dez", cold: 118, warm: 142, hot: 96 },
+  { month: "Jan", cold: 105, warm: 156, hot: 112 },
 ];
 
 export default function Dashboard() {
@@ -134,7 +134,7 @@ export default function Dashboard() {
           <ResponsiveContainer width="100%" height={250}>
             <BarChart data={funnelByTempData}>
               <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="stage" stroke="hsl(var(--muted-foreground))" />
+              <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
               <YAxis stroke="hsl(var(--muted-foreground))" />
               <Tooltip
                 contentStyle={{
@@ -143,9 +143,9 @@ export default function Dashboard() {
                 }}
               />
               <Legend />
-              <Bar dataKey="cold" stackId="a" fill="hsl(var(--temp-cold))" name="Frio" />
-              <Bar dataKey="warm" stackId="a" fill="hsl(var(--temp-warm))" name="Morno" />
-              <Bar dataKey="hot" stackId="a" fill="hsl(var(--temp-hot))" name="Quente" />
+              <Bar dataKey="hot" fill="hsl(var(--temp-hot))" name="Quente" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="warm" fill="hsl(var(--temp-warm))" name="Morno" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="cold" fill="hsl(var(--temp-cold))" name="Frio" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </CardContent>
