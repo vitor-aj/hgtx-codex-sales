@@ -14,7 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, FileText, Calendar, Trash2 } from "lucide-react";
+import { Plus, FileText, Calendar, Trash2, Eye, Edit } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface Script {
@@ -40,6 +40,9 @@ export default function Aderencia() {
     },
   ]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
+  const [editingScript, setEditingScript] = useState<Script | null>(null);
+  const [viewingScript, setViewingScript] = useState<Script | null>(null);
   const [newScript, setNewScript] = useState({
     title: "",
     prompt: "",
@@ -55,21 +58,57 @@ export default function Aderencia() {
       return;
     }
 
-    const script: Script = {
-      id: Date.now().toString(),
-      title: newScript.title,
-      prompt: newScript.prompt,
-      createdAt: new Date(),
-    };
+    if (editingScript) {
+      // Editar script existente
+      setScripts(
+        scripts.map((s) =>
+          s.id === editingScript.id
+            ? { ...s, title: newScript.title, prompt: newScript.prompt }
+            : s
+        )
+      );
+      toast({
+        title: "Script atualizado!",
+        description: "As alterações foram salvas com sucesso.",
+      });
+    } else {
+      // Criar novo script
+      const script: Script = {
+        id: Date.now().toString(),
+        title: newScript.title,
+        prompt: newScript.prompt,
+        createdAt: new Date(),
+      };
+      setScripts([script, ...scripts]);
+      toast({
+        title: "Script criado!",
+        description: "Seu script de aderência foi criado com sucesso.",
+      });
+    }
 
-    setScripts([script, ...scripts]);
     setNewScript({ title: "", prompt: "" });
+    setEditingScript(null);
     setIsDialogOpen(false);
+  };
 
-    toast({
-      title: "Script criado!",
-      description: "Seu script de aderência foi criado com sucesso.",
+  const handleEditScript = (script: Script) => {
+    setEditingScript(script);
+    setNewScript({
+      title: script.title,
+      prompt: script.prompt,
     });
+    setIsDialogOpen(true);
+  };
+
+  const handleViewScript = (script: Script) => {
+    setViewingScript(script);
+    setIsViewDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    setNewScript({ title: "", prompt: "" });
+    setEditingScript(null);
   };
 
   const handleDeleteScript = (id: string) => {
@@ -99,9 +138,13 @@ export default function Aderencia() {
           </DialogTrigger>
           <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
             <DialogHeader>
-              <DialogTitle>Cadastrar Novo Script</DialogTitle>
+              <DialogTitle>
+                {editingScript ? "Editar Script" : "Cadastrar Novo Script"}
+              </DialogTitle>
               <DialogDescription>
-                Crie um novo script de aderência definindo o título e o prompt
+                {editingScript
+                  ? "Atualize as informações do script"
+                  : "Crie um novo script de aderência definindo o título e o prompt"}
               </DialogDescription>
             </DialogHeader>
             <ScrollArea className="flex-1 pr-4">
@@ -135,53 +178,99 @@ export default function Aderencia() {
               </div>
             </ScrollArea>
             <DialogFooter>
-              <Button
-                variant="outline"
-                onClick={() => setIsDialogOpen(false)}
-              >
+              <Button variant="outline" onClick={handleCloseDialog}>
                 Cancelar
               </Button>
-              <Button onClick={handleCreateScript}>Criar Script</Button>
+              <Button onClick={handleCreateScript}>
+                {editingScript ? "Salvar Alterações" : "Criar Script"}
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
       </div>
 
+      {/* Dialog de Visualização */}
+      <Dialog open={isViewDialogOpen} onOpenChange={setIsViewDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col">
+          <DialogHeader>
+            <DialogTitle>{viewingScript?.title}</DialogTitle>
+            <DialogDescription>
+              Criado em{" "}
+              {viewingScript?.createdAt.toLocaleDateString("pt-BR")}
+            </DialogDescription>
+          </DialogHeader>
+          <ScrollArea className="flex-1 pr-4">
+            <div className="space-y-4 py-4">
+              <div className="space-y-2">
+                <Label>Prompt do Script</Label>
+                <div className="rounded-md border bg-muted/30 p-4">
+                  <p className="text-sm whitespace-pre-wrap">
+                    {viewingScript?.prompt}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </ScrollArea>
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setIsViewDialogOpen(false)}
+            >
+              Fechar
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {scripts.map((script) => (
           <Card key={script.id} className="flex flex-col">
             <CardHeader>
-              <div className="flex items-start justify-between gap-2">
-                <div className="flex items-start gap-2 flex-1 min-w-0">
-                  <FileText className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-lg line-clamp-2">
-                      {script.title}
-                    </CardTitle>
-                  </div>
+              <div className="flex items-start gap-2">
+                <FileText className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <CardTitle className="text-lg line-clamp-2">
+                    {script.title}
+                  </CardTitle>
+                  <CardDescription className="flex items-center gap-1 text-xs mt-2">
+                    <Calendar className="h-3 w-3" />
+                    {script.createdAt.toLocaleDateString("pt-BR")}
+                  </CardDescription>
                 </div>
+              </div>
+            </CardHeader>
+            <CardContent className="flex-1 flex flex-col gap-4">
+              <ScrollArea className="h-24 rounded-md border bg-muted/30 p-3">
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap line-clamp-3">
+                  {script.prompt}
+                </p>
+              </ScrollArea>
+              <div className="flex gap-2 mt-auto">
                 <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 flex-shrink-0"
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => handleViewScript(script)}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  Visualizar
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => handleEditScript(script)}
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Editar
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={() => handleDeleteScript(script.id)}
                 >
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>
-              </div>
-              <CardDescription className="flex items-center gap-1 text-xs">
-                <Calendar className="h-3 w-3" />
-                {script.createdAt.toLocaleDateString("pt-BR")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-1">
-              <div className="space-y-2">
-                <p className="text-sm text-muted-foreground font-medium">
-                  Prompt:
-                </p>
-                <ScrollArea className="h-32 rounded-md border bg-muted/30 p-3">
-                  <p className="text-sm whitespace-pre-wrap">{script.prompt}</p>
-                </ScrollArea>
               </div>
             </CardContent>
           </Card>
