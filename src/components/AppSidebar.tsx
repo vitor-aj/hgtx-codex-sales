@@ -15,7 +15,7 @@ import {
 const menuItems = [
   { title: "Dashboard", url: "/", icon: LayoutDashboard },
   { title: "Auditoria", url: "/auditoria", icon: MessageSquare },
-  { title: "Aderência", url: "/aderencia", icon: ScrollText },
+  { title: "Script de Aderência", url: "/aderencia", icon: ScrollText },
 ];
 
 export function AppSidebar() {
