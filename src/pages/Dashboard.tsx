@@ -81,14 +81,6 @@ export default function Dashboard() {
                   strokeWidth={2}
                   name="Conversão %"
                 />
-                <Line
-                  type="monotone"
-                  dataKey="meta"
-                  stroke="hsl(var(--status-success))"
-                  strokeWidth={2}
-                  strokeDasharray="5 5"
-                  name="Meta %"
-                />
               </LineChart>
             </ResponsiveContainer>
           </CardContent>
