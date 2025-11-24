@@ -388,7 +388,6 @@ export const mockKPIs: KPI[] = [
   { label: "Tempo Médio de Resposta", value: "8min", change: -35.2, trend: "up" },
   { label: "Aderência a Script", value: "78%", change: 8.7, trend: "up" },
   { label: "Temperatura Média", value: "Morno", change: 5.1, trend: "up" },
-  { label: "Taxa Superação Objeções", value: "67%", change: 15.8, trend: "up" },
 ];
 
 export const mockObjections = [
