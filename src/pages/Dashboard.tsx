@@ -1,8 +1,7 @@
 import { KPICard } from "@/components/KPICard";
-import { mockKPIs, mockObjections } from "@/lib/mockData";
+import { mockKPIs } from "@/lib/mockData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { AlertCircle, TrendingUp, Users, Zap } from "lucide-react";
+import { TrendingUp, Users, Zap } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -148,84 +147,6 @@ export default function Dashboard() {
               <Bar dataKey="cold" fill="hsl(var(--temp-cold))" name="Frio" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertCircle className="h-5 w-5 text-primary" />
-            Alertas Inteligentes
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex items-start gap-3 rounded-lg border border-status-warning/20 bg-status-warning/5 p-3 md:p-4">
-            <AlertCircle className="h-5 w-5 text-status-warning flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-sm md:text-base">5 leads quentes sem follow-up há 24h</h4>
-              <p className="text-xs md:text-sm text-muted-foreground">
-                Leads com alta probabilidade de conversão precisam de atenção imediata
-              </p>
-            </div>
-            <Badge variant="outline" className="text-status-warning border-status-warning text-xs flex-shrink-0">
-              Urgente
-            </Badge>
-          </div>
-
-          <div className="flex items-start gap-3 rounded-lg border border-status-danger/20 bg-status-danger/5 p-3 md:p-4">
-            <AlertCircle className="h-5 w-5 text-status-danger flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-sm md:text-base">Queda de aderência: Pedro M.</h4>
-              <p className="text-xs md:text-sm text-muted-foreground">
-                Aderência caiu de 82% para 69% nos últimos 7 dias
-              </p>
-            </div>
-            <Badge variant="outline" className="text-status-danger border-status-danger text-xs flex-shrink-0">
-              Crítico
-            </Badge>
-          </div>
-
-          <div className="flex items-start gap-3 rounded-lg border border-status-info/20 bg-status-info/5 p-3 md:p-4">
-            <AlertCircle className="h-5 w-5 text-status-info flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <h4 className="font-semibold text-sm md:text-base">Aumento de objeções de "Timing"</h4>
-              <p className="text-xs md:text-sm text-muted-foreground">
-                38% das conversas apresentam objeção de timing, +12% vs. semana anterior
-              </p>
-            </div>
-            <Badge variant="outline" className="text-status-info border-status-info text-xs flex-shrink-0">
-              Info
-            </Badge>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Top 5 Objeções</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {mockObjections.map((objection) => (
-              <div key={objection.type} className="space-y-2">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 text-sm">
-                  <span className="font-medium">{objection.type}</span>
-                  <div className="flex items-center gap-3 md:gap-4 text-xs md:text-sm">
-                    <span className="text-muted-foreground">{objection.count} menções</span>
-                    <span className="font-semibold text-status-success">
-                      {objection.resolvedRate}% resolvidas
-                    </span>
-                  </div>
-                </div>
-                <div className="h-2 overflow-hidden rounded-full bg-secondary">
-                  <div
-                    className="h-full bg-status-success transition-all"
-                    style={{ width: `${objection.resolvedRate}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
         </CardContent>
       </Card>
     </div>
