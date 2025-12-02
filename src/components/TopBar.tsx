@@ -30,14 +30,13 @@ export function TopBar() {
     <div className="sticky top-0 z-10 flex h-16 items-center justify-between border-b bg-card px-6">
       <div className="flex items-center gap-4">
         <SidebarTrigger />
-        <div className="h-6 w-px bg-border" />
+      </div>
+
+      <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <Filter className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm font-medium">Filtros</span>
         </div>
-      </div>
-
-      <div className="flex items-center gap-3">
         <Popover>
           <PopoverTrigger asChild>
             <Button
