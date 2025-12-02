@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Switch } from "@/components/ui/switch";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +26,7 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, FileText, Calendar, Trash2, Eye, Edit, Power, CheckCircle } from "lucide-react";
+import { Plus, FileText, Calendar, Trash2, Eye, Edit } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface Script {
@@ -324,24 +325,27 @@ export default function Aderencia() {
         {scripts.map((script) => (
           <Card key={script.id} className={`flex flex-col ${script.isActive ? "ring-2 ring-primary" : ""}`}>
             <CardHeader>
-              <div className="flex items-start gap-2">
-                <FileText className={`h-5 w-5 mt-0.5 flex-shrink-0 ${script.isActive ? "text-primary" : "text-muted-foreground"}`} />
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start gap-2 flex-1 min-w-0">
+                  <FileText className={`h-5 w-5 mt-0.5 flex-shrink-0 ${script.isActive ? "text-primary" : "text-muted-foreground"}`} />
+                  <div className="flex-1 min-w-0">
                     <CardTitle className="text-lg line-clamp-2">
                       {script.title}
                     </CardTitle>
-                    {script.isActive && (
-                      <Badge className="bg-primary/10 text-primary border-primary/20 shrink-0">
-                        <CheckCircle className="h-3 w-3 mr-1" />
-                        Ativo
-                      </Badge>
-                    )}
+                    <CardDescription className="flex items-center gap-1 text-xs mt-2">
+                      <Calendar className="h-3 w-3" />
+                      {script.createdAt.toLocaleDateString("pt-BR")}
+                    </CardDescription>
                   </div>
-                  <CardDescription className="flex items-center gap-1 text-xs mt-2">
-                    <Calendar className="h-3 w-3" />
-                    {script.createdAt.toLocaleDateString("pt-BR")}
-                  </CardDescription>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className={`text-xs font-medium ${script.isActive ? "text-primary" : "text-muted-foreground"}`}>
+                    {script.isActive ? "Ativo" : "Inativo"}
+                  </span>
+                  <Switch
+                    checked={script.isActive}
+                    onCheckedChange={() => handleActivateScript(script)}
+                  />
                 </div>
               </div>
             </CardHeader>
@@ -351,45 +355,33 @@ export default function Aderencia() {
                   {script.prompt}
                 </p>
               </ScrollArea>
-              <div className="flex flex-col gap-2 mt-auto">
+              <div className="flex gap-2 mt-auto">
                 <Button
-                  variant={script.isActive ? "secondary" : "default"}
+                  variant="outline"
                   size="sm"
-                  className="w-full"
-                  onClick={() => handleActivateScript(script)}
+                  className="flex-1"
+                  onClick={() => handleViewScript(script)}
+                >
+                  <Eye className="h-4 w-4 mr-2" />
+                  Visualizar
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1"
+                  onClick={() => handleEditScript(script)}
+                >
+                  <Edit className="h-4 w-4 mr-2" />
+                  Editar
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => handleDeleteScript(script.id)}
                   disabled={script.isActive}
                 >
-                  <Power className="h-4 w-4 mr-2" />
-                  {script.isActive ? "Script Ativo" : "Ativar Script"}
+                  <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => handleViewScript(script)}
-                  >
-                    <Eye className="h-4 w-4 mr-2" />
-                    Visualizar
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1"
-                    onClick={() => handleEditScript(script)}
-                  >
-                    <Edit className="h-4 w-4 mr-2" />
-                    Editar
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleDeleteScript(script.id)}
-                    disabled={script.isActive}
-                  >
-                    <Trash2 className="h-4 w-4 text-destructive" />
-                  </Button>
-                </div>
               </div>
             </CardContent>
           </Card>
