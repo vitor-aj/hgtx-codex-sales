@@ -47,7 +47,7 @@ export default function Dashboard() {
         <p className="text-sm md:text-base text-muted-foreground">Visão consolidada dos principais indicadores</p>
       </div>
 
-      <div className="grid gap-3 grid-cols-2 lg:grid-cols-5">
+      <div className="grid gap-4 grid-cols-2 lg:grid-cols-4">
         {mockKPIs.map((kpi) => (
           <KPICard key={kpi.label} {...kpi} />
         ))}
