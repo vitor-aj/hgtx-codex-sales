@@ -32,22 +32,22 @@ export function TopBar() {
         <SidebarTrigger />
       </div>
 
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2">
-          <Filter className="h-4 w-4 text-muted-foreground" />
-          <span className="text-sm font-medium">Filtros</span>
+      <div className="flex items-center gap-1 bg-muted/40 rounded-full px-2 py-1 border border-border/60 shadow-sm">
+        <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full">
+          <Filter className="h-4 w-4 text-primary" />
+          <span className="text-sm font-semibold text-primary">Filtros</span>
         </div>
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
               className={cn(
-                "w-[260px] justify-start text-left font-normal",
+                "w-[240px] justify-start text-left font-normal bg-background hover:bg-background/80 rounded-md shadow-sm border-0",
                 !date && "text-muted-foreground"
               )}
             >
-              <CalendarIcon className="mr-2 h-4 w-4" />
+              <CalendarIcon className="mr-2 h-4 w-4 text-primary" />
               {date?.from ? (
                 date.to ? (
                   <>
@@ -75,8 +75,13 @@ export function TopBar() {
           </PopoverContent>
         </Popover>
 
-        <Button variant="outline" size="sm" onClick={handleClearFilters}>
-          Limpar filtros
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={handleClearFilters}
+          className="text-muted-foreground hover:text-foreground hover:bg-background/80 rounded-md"
+        >
+          Limpar
         </Button>
       </div>
     </div>
