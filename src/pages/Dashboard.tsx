@@ -23,12 +23,12 @@ const conversionTrendData = [
   { month: "Jan", conversao: 28, meta: 25 },
 ];
 
-const teamPerformanceData = [
-  { rep: "Carlos S.", adherence: 87, conversion: 28 },
-  { rep: "Ana C.", adherence: 82, conversion: 25 },
-  { rep: "Pedro M.", adherence: 76, conversion: 22 },
-  { rep: "Julia R.", adherence: 91, conversion: 32 },
-  { rep: "Lucas P.", adherence: 69, conversion: 18 },
+const responseTimeData = [
+  { month: "Set", tempo: 12 },
+  { month: "Out", tempo: 10 },
+  { month: "Nov", tempo: 9 },
+  { month: "Dez", tempo: 8.5 },
+  { month: "Jan", tempo: 8 },
 ];
 
 const funnelByTempData = [
@@ -90,25 +90,31 @@ export default function Dashboard() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Users className="h-5 w-5 text-primary" />
-              Performance por Representante
+              Tempo Médio de Resposta
             </CardTitle>
           </CardHeader>
           <CardContent className="px-2 md:px-6">
             <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={teamPerformanceData}>
+              <LineChart data={responseTimeData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis dataKey="rep" stroke="hsl(var(--muted-foreground))" />
-                <YAxis stroke="hsl(var(--muted-foreground))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                <YAxis stroke="hsl(var(--muted-foreground))" unit="min" />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
                   }}
+                  formatter={(value) => [`${value} min`, "Tempo"]}
                 />
                 <Legend />
-                <Bar dataKey="adherence" fill="hsl(var(--chart-1))" name="Aderência %" />
-                <Bar dataKey="conversion" fill="hsl(var(--chart-2))" name="Conversão %" />
-              </BarChart>
+                <Line
+                  type="monotone"
+                  dataKey="tempo"
+                  stroke="hsl(var(--chart-2))"
+                  strokeWidth={2}
+                  name="Tempo (min)"
+                />
+              </LineChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
