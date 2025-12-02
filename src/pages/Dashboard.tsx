@@ -32,12 +32,12 @@ const funnelByTempData = [
 ];
 
 const performanceByRepData = [
-  { name: "Carlos Silva", tempoAtendimento: 6.5 },
-  { name: "Ana Santos", tempoAtendimento: 8.2 },
-  { name: "Pedro Lima", tempoAtendimento: 7.1 },
-  { name: "Maria Oliveira", tempoAtendimento: 5.8 },
-  { name: "João Costa", tempoAtendimento: 9.3 },
-  { name: "Lucia Ferreira", tempoAtendimento: 7.8 },
+  { name: "Carlos Silva", tempoAtendimento: 6.5, conversoes: 24 },
+  { name: "Ana Santos", tempoAtendimento: 8.2, conversoes: 18 },
+  { name: "Pedro Lima", tempoAtendimento: 7.1, conversoes: 21 },
+  { name: "Maria Oliveira", tempoAtendimento: 5.8, conversoes: 28 },
+  { name: "João Costa", tempoAtendimento: 9.3, conversoes: 15 },
+  { name: "Lucia Ferreira", tempoAtendimento: 7.8, conversoes: 19 },
 ];
 
 export default function Dashboard() {
@@ -95,19 +95,24 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="px-2 md:px-6">
-            <ResponsiveContainer width="100%" height={250}>
+            <ResponsiveContainer width="100%" height={280}>
               <BarChart data={performanceByRepData} layout="vertical">
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis type="number" stroke="hsl(var(--muted-foreground))" unit=" min" />
+                <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
                 <YAxis dataKey="name" type="category" stroke="hsl(var(--muted-foreground))" width={100} tick={{ fontSize: 12 }} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
                   }}
-                  formatter={(value) => [`${value} min`, "Tempo de Atendimento"]}
+                  formatter={(value, name) => {
+                    if (name === "Tempo (min)") return [`${value} min`, name];
+                    return [value, name];
+                  }}
                 />
-                <Bar dataKey="tempoAtendimento" fill="hsl(var(--chart-2))" name="Tempo de Atendimento" radius={[0, 4, 4, 0]} />
+                <Legend />
+                <Bar dataKey="tempoAtendimento" fill="hsl(var(--chart-2))" name="Tempo (min)" radius={[0, 4, 4, 0]} />
+                <Bar dataKey="conversoes" fill="hsl(var(--primary))" name="Conversões" radius={[0, 4, 4, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
