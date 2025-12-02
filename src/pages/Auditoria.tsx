@@ -48,12 +48,15 @@ export default function Auditoria() {
         <p className="text-sm md:text-base text-muted-foreground">Análise semântica detalhada por conversa</p>
       </div>
 
-      <div className="flex flex-col md:flex-row gap-3 md:gap-4">
+      <div className="flex flex-col md:flex-row gap-2 md:gap-3 md:items-center">
         <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input placeholder="Buscar por lead, representante ou palavra-chave..." className="pl-10" />
         </div>
-        <Button variant="outline" className="w-full md:w-auto">Filtros Avançados</Button>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Filtros:</span>
+          <Button variant="outline" className="w-full md:w-auto">Filtros Avançados</Button>
+        </div>
       </div>
 
       <Card>
