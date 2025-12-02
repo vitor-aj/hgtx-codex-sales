@@ -1,7 +1,7 @@
 import { KPICard } from "@/components/KPICard";
 import { mockKPIs } from "@/lib/mockData";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, Users, Zap } from "lucide-react";
+import { TrendingUp, Users, Zap, Clock } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -37,6 +37,15 @@ const funnelByTempData = [
   { month: "Nov", cold: 128, warm: 128, hot: 84 },
   { month: "Dez", cold: 118, warm: 142, hot: 96 },
   { month: "Jan", cold: 105, warm: 156, hot: 112 },
+];
+
+const performanceByRepData = [
+  { name: "Carlos Silva", tempoAtendimento: 6.5 },
+  { name: "Ana Santos", tempoAtendimento: 8.2 },
+  { name: "Pedro Lima", tempoAtendimento: 7.1 },
+  { name: "Maria Oliveira", tempoAtendimento: 5.8 },
+  { name: "João Costa", tempoAtendimento: 9.3 },
+  { name: "Lucia Ferreira", tempoAtendimento: 7.8 },
 ];
 
 export default function Dashboard() {
@@ -120,33 +129,61 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-primary" />
-            Funil por Temperatura
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="px-2 md:px-6">
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={funnelByTempData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-              <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
-              <YAxis stroke="hsl(var(--muted-foreground))" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "hsl(var(--card))",
-                  border: "1px solid hsl(var(--border))",
-                }}
-              />
-              <Legend />
-              <Bar dataKey="hot" fill="hsl(var(--temp-hot))" name="Quente" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="warm" fill="hsl(var(--temp-warm))" name="Morno" radius={[4, 4, 0, 0]} />
-              <Bar dataKey="cold" fill="hsl(var(--temp-cold))" name="Frio" radius={[4, 4, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      <div className="grid gap-4 md:gap-6 md:grid-cols-2">
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="h-5 w-5 text-primary" />
+              Funil por Temperatura
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={funnelByTempData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                <YAxis stroke="hsl(var(--muted-foreground))" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                  }}
+                />
+                <Legend />
+                <Bar dataKey="hot" fill="hsl(var(--temp-hot))" name="Quente" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="warm" fill="hsl(var(--temp-warm))" name="Morno" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="cold" fill="hsl(var(--temp-cold))" name="Frio" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Clock className="h-5 w-5 text-primary" />
+              Performance por Representante
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-2 md:px-6">
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={performanceByRepData} layout="vertical">
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                <XAxis type="number" stroke="hsl(var(--muted-foreground))" unit=" min" />
+                <YAxis dataKey="name" type="category" stroke="hsl(var(--muted-foreground))" width={100} tick={{ fontSize: 12 }} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "hsl(var(--card))",
+                    border: "1px solid hsl(var(--border))",
+                  }}
+                  formatter={(value) => [`${value} min`, "Tempo de Atendimento"]}
+                />
+                <Bar dataKey="tempoAtendimento" fill="hsl(var(--chart-2))" name="Tempo de Atendimento" radius={[0, 4, 4, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
