@@ -32,12 +32,12 @@ const funnelByTempData = [
 ];
 
 const performanceByRepData = [
-  { name: "Carlos Silva", tempoAtendimento: 6.5, conversoes: 24 },
-  { name: "Ana Santos", tempoAtendimento: 8.2, conversoes: 18 },
-  { name: "Pedro Lima", tempoAtendimento: 7.1, conversoes: 21 },
-  { name: "Maria Oliveira", tempoAtendimento: 5.8, conversoes: 28 },
-  { name: "João Costa", tempoAtendimento: 9.3, conversoes: 15 },
-  { name: "Lucia Ferreira", tempoAtendimento: 7.8, conversoes: 19 },
+  { name: "Carlos", tempoAtendimento: 6.5, conversoes: 24 },
+  { name: "Ana", tempoAtendimento: 8.2, conversoes: 18 },
+  { name: "Pedro", tempoAtendimento: 7.1, conversoes: 21 },
+  { name: "Maria", tempoAtendimento: 5.8, conversoes: 28 },
+  { name: "João", tempoAtendimento: 9.3, conversoes: 15 },
+  { name: "Lucia", tempoAtendimento: 7.8, conversoes: 19 },
 ];
 
 export default function Dashboard() {
@@ -96,23 +96,62 @@ export default function Dashboard() {
           </CardHeader>
           <CardContent className="px-2 md:px-6">
             <ResponsiveContainer width="100%" height={280}>
-              <BarChart data={performanceByRepData} layout="vertical">
-                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
-                <XAxis type="number" stroke="hsl(var(--muted-foreground))" />
-                <YAxis dataKey="name" type="category" stroke="hsl(var(--muted-foreground))" width={100} tick={{ fontSize: 12 }} />
+              <BarChart data={performanceByRepData} barGap={4}>
+                <defs>
+                  <linearGradient id="tempoGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--chart-2))" stopOpacity={1} />
+                    <stop offset="100%" stopColor="hsl(var(--chart-2))" stopOpacity={0.6} />
+                  </linearGradient>
+                  <linearGradient id="conversoesGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={1} />
+                    <stop offset="100%" stopColor="hsl(var(--primary))" stopOpacity={0.6} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" vertical={false} />
+                <XAxis 
+                  dataKey="name" 
+                  stroke="hsl(var(--muted-foreground))" 
+                  tick={{ fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis 
+                  stroke="hsl(var(--muted-foreground))" 
+                  axisLine={false}
+                  tickLine={false}
+                  tick={{ fontSize: 11 }}
+                />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "hsl(var(--card))",
                     border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
                   }}
                   formatter={(value, name) => {
                     if (name === "Tempo (min)") return [`${value} min`, name];
                     return [value, name];
                   }}
+                  cursor={{ fill: "hsl(var(--muted))", opacity: 0.3 }}
                 />
-                <Legend />
-                <Bar dataKey="tempoAtendimento" fill="hsl(var(--chart-2))" name="Tempo (min)" radius={[0, 4, 4, 0]} />
-                <Bar dataKey="conversoes" fill="hsl(var(--primary))" name="Conversões" radius={[0, 4, 4, 0]} />
+                <Legend 
+                  wrapperStyle={{ paddingTop: 16 }}
+                  iconType="circle"
+                />
+                <Bar 
+                  dataKey="conversoes" 
+                  fill="url(#conversoesGradient)" 
+                  name="Conversões" 
+                  radius={[6, 6, 0, 0]}
+                  maxBarSize={40}
+                />
+                <Bar 
+                  dataKey="tempoAtendimento" 
+                  fill="url(#tempoGradient)" 
+                  name="Tempo (min)" 
+                  radius={[6, 6, 0, 0]}
+                  maxBarSize={40}
+                />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
