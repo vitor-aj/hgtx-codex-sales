@@ -38,6 +38,30 @@ export default function Aderencia() {
       prompt: "Sua função é qualificar leads através de perguntas estratégicas. Avalie:\n\n- Budget disponível\n- Autoridade para decisão\n- Necessidade real\n- Timeline de implementação\n\nClassifique o lead como: Hot, Warm ou Cold.",
       createdAt: new Date("2024-01-20"),
     },
+    {
+      id: "3",
+      title: "Script de Follow-up Pós-Demo",
+      prompt: "Após uma demonstração do produto, utilize este script para:\n\n1. Agradecer pela participação\n2. Reforçar os principais benefícios apresentados\n3. Esclarecer dúvidas pendentes\n4. Apresentar próximos passos\n5. Definir data para decisão\n\nMantenha o tom consultivo e demonstre urgência sem pressão.",
+      createdAt: new Date("2024-01-22"),
+    },
+    {
+      id: "4",
+      title: "Script de Tratamento de Objeções de Preço",
+      prompt: "Quando o lead apresentar objeções relacionadas a preço:\n\n1. Valide a preocupação do cliente\n2. Reposicione o investimento em termos de ROI\n3. Compare com o custo de não resolver o problema\n4. Apresente casos de sucesso com resultados financeiros\n5. Ofereça opções de parcelamento se aplicável\n\nNunca dê desconto sem receber algo em troca.",
+      createdAt: new Date("2024-01-25"),
+    },
+    {
+      id: "5",
+      title: "Script de Reativação de Leads Frios",
+      prompt: "Para leads que esfriaram ou não responderam:\n\n1. Referencie a última conversa/interesse\n2. Compartilhe uma novidade relevante\n3. Ofereça um conteúdo de valor\n4. Faça uma pergunta aberta\n5. Proponha uma conversa rápida de 10 minutos\n\nSeja persistente mas não invasivo. Máximo 3 tentativas.",
+      createdAt: new Date("2024-01-28"),
+    },
+    {
+      id: "6",
+      title: "Script de Onboarding de Novos Clientes",
+      prompt: "Ao iniciar o relacionamento com novo cliente:\n\n1. Boas-vindas personalizadas\n2. Apresentação do time de suporte\n3. Alinhamento de expectativas e prazos\n4. Definição de métricas de sucesso\n5. Agendamento de check-ins regulares\n\nObjetivo: garantir que o cliente tenha sucesso desde o primeiro dia.",
+      createdAt: new Date("2024-01-30"),
+    },
   ]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
