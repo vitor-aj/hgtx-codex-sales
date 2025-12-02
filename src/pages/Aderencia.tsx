@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
@@ -13,8 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Plus, FileText, Calendar, Trash2, Eye, Edit } from "lucide-react";
+import { Plus, FileText, Calendar, Trash2, Eye, Edit, Power, CheckCircle } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface Script {
@@ -22,6 +33,7 @@ interface Script {
   title: string;
   prompt: string;
   createdAt: Date;
+  isActive: boolean;
 }
 
 export default function Aderencia() {
@@ -31,46 +43,56 @@ export default function Aderencia() {
       title: "Script de Vendas - Produto Premium",
       prompt: "Você é um especialista em vendas consultivas. Seu objetivo é conduzir uma conversa de vendas seguindo estas etapas:\n\n1. Abertura e Rapport\n2. Descoberta de necessidades\n3. Apresentação da solução\n4. Tratamento de objeções\n5. Fechamento\n\nSempre personalize a abordagem de acordo com o perfil do cliente.",
       createdAt: new Date("2024-01-15"),
+      isActive: true,
     },
     {
       id: "2",
       title: "Script de Qualificação de Leads",
       prompt: "Sua função é qualificar leads através de perguntas estratégicas. Avalie:\n\n- Budget disponível\n- Autoridade para decisão\n- Necessidade real\n- Timeline de implementação\n\nClassifique o lead como: Hot, Warm ou Cold.",
       createdAt: new Date("2024-01-20"),
+      isActive: false,
     },
     {
       id: "3",
       title: "Script de Follow-up Pós-Demo",
       prompt: "Após uma demonstração do produto, utilize este script para:\n\n1. Agradecer pela participação\n2. Reforçar os principais benefícios apresentados\n3. Esclarecer dúvidas pendentes\n4. Apresentar próximos passos\n5. Definir data para decisão\n\nMantenha o tom consultivo e demonstre urgência sem pressão.",
       createdAt: new Date("2024-01-22"),
+      isActive: false,
     },
     {
       id: "4",
       title: "Script de Tratamento de Objeções de Preço",
       prompt: "Quando o lead apresentar objeções relacionadas a preço:\n\n1. Valide a preocupação do cliente\n2. Reposicione o investimento em termos de ROI\n3. Compare com o custo de não resolver o problema\n4. Apresente casos de sucesso com resultados financeiros\n5. Ofereça opções de parcelamento se aplicável\n\nNunca dê desconto sem receber algo em troca.",
       createdAt: new Date("2024-01-25"),
+      isActive: false,
     },
     {
       id: "5",
       title: "Script de Reativação de Leads Frios",
       prompt: "Para leads que esfriaram ou não responderam:\n\n1. Referencie a última conversa/interesse\n2. Compartilhe uma novidade relevante\n3. Ofereça um conteúdo de valor\n4. Faça uma pergunta aberta\n5. Proponha uma conversa rápida de 10 minutos\n\nSeja persistente mas não invasivo. Máximo 3 tentativas.",
       createdAt: new Date("2024-01-28"),
+      isActive: false,
     },
     {
       id: "6",
       title: "Script de Onboarding de Novos Clientes",
       prompt: "Ao iniciar o relacionamento com novo cliente:\n\n1. Boas-vindas personalizadas\n2. Apresentação do time de suporte\n3. Alinhamento de expectativas e prazos\n4. Definição de métricas de sucesso\n5. Agendamento de check-ins regulares\n\nObjetivo: garantir que o cliente tenha sucesso desde o primeiro dia.",
       createdAt: new Date("2024-01-30"),
+      isActive: false,
     },
   ]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isViewDialogOpen, setIsViewDialogOpen] = useState(false);
+  const [isActivateDialogOpen, setIsActivateDialogOpen] = useState(false);
+  const [scriptToActivate, setScriptToActivate] = useState<Script | null>(null);
   const [editingScript, setEditingScript] = useState<Script | null>(null);
   const [viewingScript, setViewingScript] = useState<Script | null>(null);
   const [newScript, setNewScript] = useState({
     title: "",
     prompt: "",
   });
+
+  const activeScript = scripts.find((s) => s.isActive);
 
   const handleCreateScript = () => {
     if (!newScript.title.trim() || !newScript.prompt.trim()) {
@@ -83,7 +105,6 @@ export default function Aderencia() {
     }
 
     if (editingScript) {
-      // Editar script existente
       setScripts(
         scripts.map((s) =>
           s.id === editingScript.id
@@ -96,12 +117,12 @@ export default function Aderencia() {
         description: "As alterações foram salvas com sucesso.",
       });
     } else {
-      // Criar novo script
       const script: Script = {
         id: Date.now().toString(),
         title: newScript.title,
         prompt: newScript.prompt,
         createdAt: new Date(),
+        isActive: false,
       };
       setScripts([script, ...scripts]);
       toast({
@@ -113,6 +134,31 @@ export default function Aderencia() {
     setNewScript({ title: "", prompt: "" });
     setEditingScript(null);
     setIsDialogOpen(false);
+  };
+
+  const handleActivateScript = (script: Script) => {
+    if (script.isActive) return;
+    setScriptToActivate(script);
+    setIsActivateDialogOpen(true);
+  };
+
+  const confirmActivateScript = () => {
+    if (!scriptToActivate) return;
+    
+    setScripts(
+      scripts.map((s) => ({
+        ...s,
+        isActive: s.id === scriptToActivate.id,
+      }))
+    );
+    
+    toast({
+      title: "Script ativado!",
+      description: `"${scriptToActivate.title}" agora está ativo e será usado nas análises.`,
+    });
+    
+    setScriptToActivate(null);
+    setIsActivateDialogOpen(false);
   };
 
   const handleEditScript = (script: Script) => {
@@ -246,16 +292,52 @@ export default function Aderencia() {
         </DialogContent>
       </Dialog>
 
+      {/* AlertDialog de Confirmação de Ativação */}
+      <AlertDialog open={isActivateDialogOpen} onOpenChange={setIsActivateDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Ativar Script</AlertDialogTitle>
+            <AlertDialogDescription className="space-y-3">
+              <p>
+                Você está prestes a ativar o script <strong>"{scriptToActivate?.title}"</strong>.
+              </p>
+              <p>
+                <strong>Importante:</strong> Apenas um script pode estar ativo por vez. O script ativo é utilizado como referência para análise de aderência em todas as conversas do sistema.
+              </p>
+              {activeScript && activeScript.id !== scriptToActivate?.id && (
+                <p className="text-status-warning">
+                  O script atualmente ativo <strong>"{activeScript.title}"</strong> será desativado automaticamente.
+                </p>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={confirmActivateScript}>
+              Confirmar Ativação
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {scripts.map((script) => (
-          <Card key={script.id} className="flex flex-col">
+          <Card key={script.id} className={`flex flex-col ${script.isActive ? "ring-2 ring-primary" : ""}`}>
             <CardHeader>
               <div className="flex items-start gap-2">
-                <FileText className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                <FileText className={`h-5 w-5 mt-0.5 flex-shrink-0 ${script.isActive ? "text-primary" : "text-muted-foreground"}`} />
                 <div className="flex-1 min-w-0">
-                  <CardTitle className="text-lg line-clamp-2">
-                    {script.title}
-                  </CardTitle>
+                  <div className="flex items-center gap-2">
+                    <CardTitle className="text-lg line-clamp-2">
+                      {script.title}
+                    </CardTitle>
+                    {script.isActive && (
+                      <Badge className="bg-primary/10 text-primary border-primary/20 shrink-0">
+                        <CheckCircle className="h-3 w-3 mr-1" />
+                        Ativo
+                      </Badge>
+                    )}
+                  </div>
                   <CardDescription className="flex items-center gap-1 text-xs mt-2">
                     <Calendar className="h-3 w-3" />
                     {script.createdAt.toLocaleDateString("pt-BR")}
@@ -269,32 +351,45 @@ export default function Aderencia() {
                   {script.prompt}
                 </p>
               </ScrollArea>
-              <div className="flex gap-2 mt-auto">
+              <div className="flex flex-col gap-2 mt-auto">
                 <Button
-                  variant="outline"
+                  variant={script.isActive ? "secondary" : "default"}
                   size="sm"
-                  className="flex-1"
-                  onClick={() => handleViewScript(script)}
+                  className="w-full"
+                  onClick={() => handleActivateScript(script)}
+                  disabled={script.isActive}
                 >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Visualizar
+                  <Power className="h-4 w-4 mr-2" />
+                  {script.isActive ? "Script Ativo" : "Ativar Script"}
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1"
-                  onClick={() => handleEditScript(script)}
-                >
-                  <Edit className="h-4 w-4 mr-2" />
-                  Editar
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDeleteScript(script.id)}
-                >
-                  <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
+                <div className="flex gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleViewScript(script)}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    Visualizar
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex-1"
+                    onClick={() => handleEditScript(script)}
+                  >
+                    <Edit className="h-4 w-4 mr-2" />
+                    Editar
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleDeleteScript(script.id)}
+                    disabled={script.isActive}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
+                  </Button>
+                </div>
               </div>
             </CardContent>
           </Card>
