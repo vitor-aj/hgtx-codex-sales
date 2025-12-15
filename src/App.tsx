@@ -13,6 +13,7 @@ import Aderencia from "./pages/Aderencia";
 import Objecoes from "./pages/Objecoes";
 import Segmentacao from "./pages/Segmentacao";
 import Configuracoes from "./pages/Configuracoes";
+import MultiCDN from "./pages/MultiCDN";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ const App = () => (
                   <Route path="/objecoes" element={<Objecoes />} />
                   <Route path="/segmentacao" element={<Segmentacao />} />
                   <Route path="/configuracoes" element={<Configuracoes />} />
+                  <Route path="/multicdn" element={<MultiCDN />} />
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
